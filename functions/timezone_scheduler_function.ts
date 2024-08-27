@@ -57,7 +57,7 @@ export const TimeZoneSchedulerFunction = DefineFunction({
 });
 
 export default SlackFunction(
-  TimeZoneSchedulerFunction,
+  "REPLACE WITH THE FUNCTION DEFINITION HERE", // CHANGE THIS 
   async ({ inputs }) => {
     /* YOU CAN DECLARE THE INPUTS TOGETHER HERE*/
 
@@ -69,9 +69,8 @@ export default SlackFunction(
     try {
       // Step 1: Correctly format the meeting time for API usage
       const formattedMeetingTime = formatDateTimeForAPI(
-        "ADD THE meeting_time INPUT",
+        //ADD THE meeting_time INPUT,
       );
-      console.log("Formatted meeting time for API:", formattedMeetingTime);
 
       const meetingConversionResult = await convertTimeZone(
         // ADD THE from_timezone INPUT,
@@ -87,7 +86,7 @@ export default SlackFunction(
       }
 
       // Step 2: Extract timezone offset from user_timezone
-      const timezoneMatch = user_timezone?.match(/GMT([+-]\d+)/);
+      const timezoneMatch = /* ADD user_timezone INPUT*/?.match(/GMT([+-]\d+)/);
       if (!timezoneMatch) {
         throw new Error("Invalid user timezone format");
       }
@@ -104,7 +103,6 @@ export default SlackFunction(
         formattedMeetingTime,
         userOffsetTimezone,
       );
-      console.log("User timezone conversion result:", calendarConversionResult);
 
       if (
         !calendarConversionResult || !calendarConversionResult.conversionResult
@@ -119,7 +117,7 @@ export default SlackFunction(
       calendarMeetingTime = Math.floor(userTimeZoneDate.getTime() / 1000);
 
       // Step 4: Calculate readable times
-      const originTime = new Date("ADD THE meeting_time INPUT");
+      const originTime = new Date(/*ADD THE meeting_time INPUT*/);
       readableTimeOrigin = originTime.toLocaleString("en-US", {
         hour: "numeric",
         minute: "numeric",
@@ -137,23 +135,21 @@ export default SlackFunction(
 
       // Step 5: Calculate end time for user
       const endTimeUser = new Date(
-        userTimeZoneDate.getTime() + "ADD THE duration_minutes INPUT" * 60000,
+        userTimeZoneDate.getTime() + /*ADD THE duration_minutes INPUT*/ * 60000,
       );
       calendarEndTime = Math.floor(endTimeUser.getTime() / 1000);
     } catch (error) {
-      console.error("Error converting time:", error);
-      readableTimeOrigin = "Error converting origin time";
-      readableTimeParticipant = "Error converting target time";
-      calendarMeetingTime = null;
-      calendarEndTime = null;
+      return {
+        error: `Error converting time: ${error.message}`,
+      };
     }
 
     return {
       outputs: {
-        readable_time_origin: "ADD THE OUTPUT VALUE",
-        readable_time_participant: "ADD THE OUTPUT VALUE",
-        calendar_meeting_time: "ADD THE OUTPUT VALUE",
-        calendar_end_time: "ADD THE OUTPUT VALUE",
+        readable_time_origin: /*ADD THE OUTPUT VALUE*/,
+        readable_time_participant: /*ADD THE OUTPUT VALUE*/,
+        calendar_meeting_time: /*ADD THE OUTPUT VALUE*/,
+        calendar_end_time: /*ADD THE OUTPUT VALUE*/,
       },
     };
   },
