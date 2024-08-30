@@ -85,23 +85,11 @@ export default SlackFunction(
         throw new Error("Invalid DateTime format from API.");
       }
 
-      // Step 2: Extract timezone offset from user_timezone
-      const timezoneMatch = /* ADD user_timezone INPUT*/?.match(/GMT([+-]\d+)/);
-      if (!timezoneMatch) {
-        throw new Error("Invalid user timezone format");
-      }
-      const userOffset = timezoneMatch[1];
-
-      // Correct handling for Etc/GMT offset (invert the sign)
-      const userOffsetTimezone = `Etc/GMT${
-        userOffset.startsWith("+") ? "-" : "+"
-      }${userOffset.slice(1)}`;
-
-      // Step 3: Convert meeting_time from from_timezone to user timezone
+      // Step 2: Convert meeting_time from from_timezone to user timezone
       const calendarConversionResult = await convertTimeZone(
         // ADD THE from_timezone INPUT,
         formattedMeetingTime,
-        userOffsetTimezone,
+        // ADD THE user_timezone INPUT,
       );
 
       if (
