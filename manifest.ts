@@ -13,4 +13,6 @@ export default Manifest({
   workflows: [],
   outgoingDomains: [],
   botScopes: ["commands", "chat:write", "chat:write.public"],
+  import { TimeZoneSchedulerFunction } from "./functions/timezone_scheduler_function.ts";
+functions: [TimeZoneSchedulerFunction],
 });
